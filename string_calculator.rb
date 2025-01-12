@@ -2,12 +2,19 @@ class StringCalculator
   def add(numbers)
     return 0 if numbers.empty?
   
+    delimiter = ","
     if numbers.start_with?("//")
-      delimiter = numbers[2]
-      numbers = numbers[4..]
-      numbers.split(delimiter).map(&:to_i).sum
-    else
-      numbers.gsub("\n", ",").split(",").map(&:to_i).sum
+      parts = numbers.split("\n", 2)
+      delimiter = Regexp.escape(parts[0][2..])
+      numbers = parts[1]
     end
+  
+    numbers = numbers.gsub("\n", delimiter)
+    num_array = numbers.split(delimiter).map(&:to_i)
+  
+    negatives = num_array.select { |n| n < 0 }
+    raise "negative numbers not allowed: #{negatives.join(', ')}" unless negatives.empty?
+  
+    num_array.sum
   end  
 end
