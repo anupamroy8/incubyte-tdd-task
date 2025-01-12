@@ -30,7 +30,7 @@ You can run the tests in two ways:
 
 1. Using bundle exec (recommended):
    ```bash
-   bundle exec rspec
+   bundle exec rspec .
    ```
 
 2. Direct RSpec command:
